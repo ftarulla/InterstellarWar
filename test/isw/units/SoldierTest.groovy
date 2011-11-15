@@ -12,11 +12,20 @@ class SoldierTest extends GroovyTestCase {
 		super.tearDown();
 	}
 
+	def checkBaseHealthDoesntChange(soldier, originalBaseHealth) {
+		assertEquals(soldier.baseHealth, originalBaseHealth)
+	}
+	
 	public final void testReceiveHit() {
 		def soldier = new Soldier()
+		def originalBaseHealth = soldier.baseHealth
+		
+		//
 		soldier.receiveHit(10)
+		//
 		
 		assertEquals(soldier.health, 90)
+		checkBaseHealthDoesntChange(soldier, originalBaseHealth)
 	}
-
+	
 }

@@ -2,13 +2,17 @@ package isw.units
 
 class Soldier {
 	
-	def health = 100
+	def baseHealth = 100
+	def hitPoints = 0
 	
 	Soldier() {
-		
+	}
+
+	def getHealth() {
+		return baseHealth - hitPoints
 	}
 	
 	def receiveHit(hitPoints) {
-		health -= hitPoints 
+		this.hitPoints += hitPoints 
 	}
 }
