@@ -34,7 +34,7 @@ class RobotTest extends GroovyTestCase {
 	public final void testHealthNeverLowerZero() {
 		def robot = new Robot()
 		
-		def hitpoints = robot.health + 1
+		def hitpoints = robot.baseHealth + 1
 		def expected = 0
 		
 		//
@@ -43,5 +43,23 @@ class RobotTest extends GroovyTestCase {
 		
 		assertEquals("Robots' health shouldn't be lower than zero", 0, robot.health)
 	}
+	
+	public final void testHealNeverUpperBaseHealth() {
+		def robot = new Robot()
+		
+		def hitpoints = robot.baseHealth + 20
+		robot.receiveHit(hitpoints)
+		// here the robot health is zero
+		// this fact is tested in other test
+		
+		def healpoints = robot.baseHealth + 1
+		//		
+		robot.receiveHeal(healpoints)
+		//
+		
+		assertEquals("Robots' health shouldn't be more than their base health", 
+					 robot.baseHealth, robot.health)
+	}
 
 }
+
