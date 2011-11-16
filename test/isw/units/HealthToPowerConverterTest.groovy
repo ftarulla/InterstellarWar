@@ -1,8 +1,9 @@
 package isw.units;
 
-import groovy.util.GroovyTestCase;
-
 import isw.units.components.*
+
+import org.junit.Test;
+import groovy.util.GroovyTestCase;
 
 class HealthToPowerConverterTest extends GroovyTestCase {
 
@@ -16,14 +17,21 @@ class HealthToPowerConverterTest extends GroovyTestCase {
 
 	public final void testPowerNeverLowerZero() {
 
-		def powerConverter = new BasicHealthToPowerConverter()
-		def healthpoints = 0
+		def powerConverter
+		def powerPoints
+		def healthpoints = 1
 		
 		//
-		def powerPoints = powerConverter.convert(healthpoints)
+		powerConverter = new NullHealthToPowerConverter()
+		powerPoints = powerConverter.convert(healthpoints)
 		//
+		assertTrue("Power result from a converter shouldn't be lower than zero", powerPoints >= 0)
 		
-		assertEquals("Power result from a converter shouldn't be lower than zero",
-					  0, powerPoints)
+		//
+		powerConverter = new BasicHealthToPowerConverter()
+		powerPoints = powerConverter.convert(healthpoints)
+		//
+		assertTrue("Power result from a converter shouldn't be lower than zero", powerPoints >= 0)
+		
 	}
 }

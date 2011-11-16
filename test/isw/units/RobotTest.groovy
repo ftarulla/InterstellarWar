@@ -44,7 +44,7 @@ class RobotTest extends GroovyTestCase {
 		robot.receiveHit(hitpoints)
 		//
 		
-		assertEquals("Robots' health shouldn't be lower than zero", 0, robot.health)
+		assertEquals("Robots' health shouldn't be lower than zero", expected, robot.health)
 	}
 	
 	public final void testHealNeverUpperBaseHealth() {
@@ -66,9 +66,14 @@ class RobotTest extends GroovyTestCase {
 
 	public final void testRobotDefaultPowerConverter() {
 		def robot = new Robot()
+		def stat = 0
 		
 		//
-		def stat = robot.powerStatus
+		try {
+			stat = robot.powerStatus
+		} catch (NullPointerException) {
+			fail("Robot can not compute power status.")
+		}
 		//
 		
 		assertEquals("Robots should have a null power converter by default that returns zero",
@@ -80,6 +85,7 @@ class RobotTest extends GroovyTestCase {
 		
 		def expected = 1000
 		def mockContextClass = new MockFor(BasicHealthToPowerConverter)
+		mockContextClass.demand.setMaxPower { p ->  }
 		mockContextClass.demand.convert { hp -> expected }
 		
 		mockContextClass.use {
