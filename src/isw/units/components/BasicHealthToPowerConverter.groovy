@@ -8,8 +8,6 @@ class BasicHealthToPowerConverter extends HealthToPowerConverter {
 	
 	@Override
 	def convert(healthpoints) {
-		// utilizo healthpoints como un porcentaje
-		// TODO: refactor with NullHealth...
 		return maxPower * (healthpoints/100)
 	}
 }
