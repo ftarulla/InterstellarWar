@@ -4,16 +4,19 @@ import isw.units.components.NullHealthToPowerConverter
 
 class Unit {
 	
-	def baseHealth = 100
-	def hitPoints = 0
-	private powerConverter = null	
+	protected def baseHealth = 100
+	protected def hitPoints = 0
+	protected powerConverter = new NullHealthToPowerConverter()	
 	
 	public Unit() {
-		powerConverter = new NullHealthToPowerConverter()
 	}
 
 	def getHealth() {
 		return baseHealth - hitPoints
+	}
+	
+	def getHitPoints() {
+		return hitPoints
 	}
 	
 	def receiveHit(hitPoints) {
