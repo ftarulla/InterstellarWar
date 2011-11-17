@@ -2,7 +2,7 @@ package isw.units.components
 
 class BasicHealthToPowerConverter extends HealthToPowerConverter {
 
-	BasicHealthToPowerConverter() {
+	public BasicHealthToPowerConverter() {
 		maxPower = 1000
 	}
 	

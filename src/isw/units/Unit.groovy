@@ -8,7 +8,7 @@ class Unit {
 	def hitPoints = 0
 	private powerConverter = null	
 	
-	Unit() {
+	public Unit() {
 		powerConverter = new NullHealthToPowerConverter()
 	}
 

@@ -23,13 +23,22 @@ class UnitTest extends GroovyTestCase {
 		def unit = new Unit()
 		def originalBaseHealth = unit.baseHealth
 		
+		// 1st hit
 		def hitpoints = 10
 		def expected = 90
-		
 		//
 		unit.receiveHit(hitpoints)
 		//
+		assertEquals(expected, unit.health)
+		checkBaseHealthDoesntChange(unit, originalBaseHealth)
+
 		
+		// 2nd hit
+		hitpoints = 20
+		expected = 70
+		//
+		unit.receiveHit(hitpoints)
+		//
 		assertEquals(expected, unit.health)
 		checkBaseHealthDoesntChange(unit, originalBaseHealth)
 	}
@@ -38,13 +47,12 @@ class UnitTest extends GroovyTestCase {
 		def unit = new Unit()
 		
 		def hitpoints = unit.baseHealth + 1
-		def expected = 0
 		
 		//
 		unit.receiveHit(hitpoints)
 		//
 		
-		assertEquals("Units' health shouldn't be lower than zero", expected, unit.health)
+		assertTrue("Units' health shouldn't be lower than zero", unit.health >= 0)
 	}
 	
 	public final void testHealNeverUpperBaseHealth() {
@@ -60,8 +68,8 @@ class UnitTest extends GroovyTestCase {
 		unit.receiveRepair(repairpoints)
 		//
 		
-		assertEquals("Units' health shouldn't be more than their base health", 
-					 unit.baseHealth, unit.health)
+		assertTrue("Units' health shouldn't be more than their base health", 
+					 unit.health <= unit.baseHealth)
 	}
 
 	public final void testUnitDefaultPowerConverter() {

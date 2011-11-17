@@ -2,7 +2,7 @@ package isw.units.components
 
 class NullHealthToPowerConverter extends HealthToPowerConverter {
 
-	NullHealthToPowerConverter() {
+	public NullHealthToPowerConverter() {
 		maxPower = 0
 	}
 	
