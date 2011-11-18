@@ -3,23 +3,29 @@ package isw.units;
 import groovy.mock.interceptor.MockFor
 import groovy.util.GroovyTestCase;
 
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
+
 import isw.units.components.*
 
-class UnitTest extends GroovyTestCase {
+class UnitTest {
 
-	protected void setUp() throws Exception {
-		super.setUp();
+	@Before
+	public void setUp() throws Exception {
 	}
 
-	protected void tearDown() throws Exception {
-		super.tearDown();
+	@After
+	public void tearDown() throws Exception {
 	}
 
 	def checkBaseHealthDoesntChange(unit, originalBaseHealth) {
 		assertEquals(unit.baseHealth, originalBaseHealth)
 	}
 	
-	public final void testReceiveHit() {
+	@Test
+	public final void receiveHit() {
 		def unit = new Unit()
 		def originalBaseHealth = unit.baseHealth
 		
@@ -43,7 +49,8 @@ class UnitTest extends GroovyTestCase {
 		checkBaseHealthDoesntChange(unit, originalBaseHealth)
 	}
 	
-	public final void testHealthNeverLowerZero() {
+	@Test
+	public final void healthNeverLowerZero() {
 		def unit = new Unit()
 		
 		def hitpoints = unit.baseHealth + 1
@@ -55,7 +62,8 @@ class UnitTest extends GroovyTestCase {
 		assertTrue("Units' health shouldn't be lower than zero", unit.health >= 0)
 	}
 	
-	public final void testHealNeverUpperBaseHealth() {
+	@Test
+	public final void healNeverUpperBaseHealth() {
 		def unit = new Unit()
 		
 		def hitpoints = unit.baseHealth + 20
@@ -72,7 +80,8 @@ class UnitTest extends GroovyTestCase {
 					 unit.health <= unit.baseHealth)
 	}
 
-	public final void testUnitDefaultPowerConverter() {
+	@Test
+	public final void unitDefaultPowerConverter() {
 		def unit = new Unit()
 		def stat = 0
 		
@@ -88,7 +97,8 @@ class UnitTest extends GroovyTestCase {
 					  0, stat)
 	}
 
-	public final void testPowerConverterInstallation() {
+	@Test
+	public final void powerConverterInstallation() {
 		def unit = new Unit()
 		
 		def expected = 1000
@@ -105,14 +115,15 @@ class UnitTest extends GroovyTestCase {
 		}
 	}
 	
-	public final void testPowerConverterUninstall() {
+	@Test
+	public final void powerConverterUninstall() {
 		def unit = new Unit()
 		def expected = 0
 		def stat = 0
 		
 		// mock for power converter
 		expected = 1000
-		def converter = [fromHealthToPower:{ hp -> expected }] as BasicHealthToPowerConverter
+		def converter = [convert:{ hp -> expected }] as BasicHealthToPowerConverter
 		//
 		unit.installHealthPowerConverter(converter)
 		stat = unit.powerStatus
